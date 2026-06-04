@@ -67,6 +67,9 @@ header {
 .card-hdr p  { font-size: 12px; color: var(--muted); margin-top: 1px; }
 .card-body   { padding: 0 24px 24px; }
 
+/* Results card gets overflow visible so tooltips can escape */
+.card.results-card { overflow: visible; }
+
 .sec-label { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted2); margin-bottom: 10px; }
 
 .deposit-top {
@@ -180,7 +183,6 @@ input::placeholder { color: var(--muted2); }
 }
 @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
 
-
 /* ── BREAKEVEN BANNER ── */
 .breakeven-banner {
   background: #e8f4fd; border: 1px solid #b8d9f5;
@@ -211,7 +213,11 @@ input::placeholder { color: var(--muted2); }
 @keyframes pop { 0%{transform:scale(1)} 50%{transform:scale(1.3)} 100%{transform:scale(1)} }
 
 /* ── TOOLTIP ── */
-.tooltip-wrap { position: relative; display: inline-flex; align-items: center; }
+.tooltip-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
 .tooltip-icon {
   width: 15px; height: 15px; border-radius: 50%;
   background: var(--border-soft); border: 1px solid var(--border);
@@ -221,27 +227,38 @@ input::placeholder { color: var(--muted2); }
   transition: .15s; line-height: 1; user-select: none;
 }
 .tooltip-icon:hover { background: #e8f4fd; border-color: #b8d9f5; color: #1a7bbf; }
+
+/* Tooltip box is now fixed-position and injected via JS — no CSS-only hover needed */
 .tooltip-box {
-  position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  display: block;
+  position: fixed;
+  top: -9999px; left: -9999px;
   background: #1a1f2e; color: #fff; border-radius: 8px;
   padding: 9px 12px; font-size: 12px; line-height: 1.5; font-weight: 400;
   width: 230px; pointer-events: none;
-  opacity: 0; visibility: hidden; transition: opacity .15s, visibility .15s;
-  box-shadow: 0 4px 16px rgba(0,0,0,.18);
-  z-index: 200; white-space: normal;
+  opacity: 0; visibility: hidden;
+  transition: opacity .15s, visibility .15s;
+  box-shadow: 0 4px 16px rgba(0,0,0,.22);
+  z-index: 9999; white-space: normal;
 }
+.tooltip-box.visible { opacity: 1; visibility: visible; }
+
+/* Arrow — direction toggled by JS */
 .tooltip-box::after {
-  content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
-  border: 5px solid transparent; border-top-color: #1a1f2e;
+  content: '';
+  position: absolute;
+  left: 50%; transform: translateX(-50%);
+  border: 5px solid transparent;
 }
-.tooltip-wrap:hover .tooltip-box,
-.tooltip-wrap:focus-within .tooltip-box { opacity: 1; visibility: visible; }
-/* Flip tooltip if near bottom of viewport — handled with .flip class */
-.tooltip-box.flip {
-  bottom: auto; top: calc(100% + 8px);
+.tooltip-box.arrow-down::after {
+  top: 100%;
+  border-top-color: #1a1f2e;
+  border-bottom-color: transparent;
 }
-.tooltip-box.flip::after {
-  top: auto; bottom: 100%; border-top-color: transparent; border-bottom-color: #1a1f2e;
+.tooltip-box.arrow-up::after {
+  bottom: 100%;
+  border-bottom-color: #1a1f2e;
+  border-top-color: transparent;
 }
 
 /* UPGRADE SAVINGS */
@@ -357,8 +374,10 @@ input::placeholder { color: var(--muted2); }
 .pnl-sub   { font-size: 11px; color: var(--muted); margin-top: 1px; }
 .pnl-val   { font-size: 16px; font-weight: 800; font-variant-numeric: tabular-nums; }
 
-.rgroup   { border: 1px solid var(--border); border-radius: var(--rs); overflow: hidden; margin-bottom: 12px; }
-.rg-hdr   { background: var(--bg); border-bottom: 1px solid var(--border); padding: 8px 14px; font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+/* overflow:visible so tooltips inside can escape */
+.rgroup   { border: 1px solid var(--border); border-radius: var(--rs); overflow: visible; margin-bottom: 12px; }
+.rg-hdr   { background: var(--bg); border-bottom: 1px solid var(--border); padding: 8px 14px; font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--muted);
+            border-radius: var(--rs) var(--rs) 0 0; }
 .rrow     { display: flex; justify-content: space-between; align-items: center; padding: 9px 14px; border-top: 1px solid var(--border-soft); font-size: 13px; }
 .rrow:first-child { border-top: none; }
 .rrow .rl { color: var(--muted); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
@@ -379,6 +398,7 @@ input::placeholder { color: var(--muted2); }
   padding: 7px 14px 7px 36px; border-top: 1px solid var(--border-soft);
   font-size: 12px; background: var(--bg);
 }
+.sub-rrow:last-child { border-radius: 0 0 var(--rs) var(--rs); }
 .sub-rrow .rl { color: var(--muted2); display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
 .sub-rrow .rv { font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
 
@@ -568,8 +588,8 @@ footer a { color: var(--accent); text-decoration: none; }
     </div>
   </div>
 
-  <!-- RESULTS CARD -->
-  <div class="card">
+  <!-- RESULTS CARD — overflow:visible so tooltips escape -->
+  <div class="card results-card">
     <div class="card-hdr">
       <div class="card-icon">📊</div>
       <div><h2>Charge Breakdown</h2><p>Updates instantly as you type</p></div>
@@ -613,6 +633,9 @@ footer a { color: var(--accent); text-decoration: none; }
   <span id="copyToastMsg">Result copied!</span>
 </div>
 
+<!-- Single shared tooltip box — moved & shown by JS -->
+<div class="tooltip-box arrow-down" id="globalTooltip"></div>
+
 <script>
 /* ── DATA ── */
 const TIERS = [
@@ -633,7 +656,6 @@ const STT_RATES = {
 const STAMP_DUTY = { equity:0.00015, intraday:0.00003, futures:0.00002, options:0.00003 };
 const SEBI_FEE   = 0.000001;
 
-/* Tooltip text for each tax line */
 const TAX_TOOLTIPS = {
   stt:      'Securities Transaction Tax — levied by the government on every buy/sell transaction of listed securities. It is a direct tax paid to the Income Tax department.',
   exchange: 'Fees charged by NSE/BSE for facilitating the trade on their platform. Calculated as a percentage of total turnover.',
@@ -753,28 +775,144 @@ function computeCharges(tier, tradeType, buyTurnover, sellTurnover, lots) {
   return { brokerage, stt, exchangeCharge, sebiCharge, stampDuty, gst, taxesTotal, totalCharges };
 }
 
+/* ── SMART TOOLTIP SYSTEM ── */
+// Single shared tooltip element, positioned via JS to avoid clipping
+const _gTip = document.getElementById('globalTooltip');
+let _tipHideTimer = null;
+
+function initTooltips() {
+  // Event delegation — attach once to document
+  document.addEventListener('mouseover', onTipEnter);
+  document.addEventListener('mouseout',  onTipLeave);
+  document.addEventListener('focusin',   onTipEnter);
+  document.addEventListener('focusout',  onTipLeave);
+  document.addEventListener('scroll',    hideTooltip, true);
+  window.addEventListener('resize', hideTooltip);
+}
+
+function onTipEnter(e) {
+  const icon = e.target.closest('.tooltip-icon');
+  if (!icon) return;
+  clearTimeout(_tipHideTimer);
+  const text = icon.getAttribute('data-tip');
+  if (!text) return;
+  showTooltip(icon, text);
+}
+
+function onTipLeave(e) {
+  const icon = e.target.closest('.tooltip-icon');
+  if (!icon) return;
+  _tipHideTimer = setTimeout(hideTooltip, 80);
+}
+
+function showTooltip(anchor, text) {
+  _gTip.textContent = text;
+
+  const tipW  = _gTip.offsetWidth;
+  const tipH  = _gTip.offsetHeight;
+  const gap   = 10;
+  const arrowH = 5;
+  const anchorRect = anchor.getBoundingClientRect();
+  const vp = { w: window.innerWidth, h: window.innerHeight };
+
+  const spaceAbove = anchorRect.top;
+  const spaceBelow = vp.h - anchorRect.bottom;
+  const showAbove  = spaceAbove >= tipH + gap + arrowH + 4 || spaceBelow < tipH + gap + arrowH + 4;
+
+  let top;
+  if (showAbove) {
+    top = anchorRect.top - tipH - gap - arrowH;
+    _gTip.classList.remove("arrow-up");
+    _gTip.classList.add("arrow-down");
+  } else {
+    top = anchorRect.bottom + gap + arrowH;
+    _gTip.classList.remove("arrow-down");
+    _gTip.classList.add("arrow-up");
+  }
+
+  const anchorCx = anchorRect.left + anchorRect.width / 2;
+  const margin = 8;
+  let left = anchorCx - tipW / 2;
+  left = Math.max(margin, Math.min(left, vp.w - tipW - margin));
+
+  const arrowLeft = anchorCx - left;
+  const clampedArrow = Math.max(16, Math.min(arrowLeft, tipW - 16));
+  _gTip.style.setProperty("--arrow-left", clampedArrow + "px");
+
+  _gTip.style.top  = top + "px";
+  _gTip.style.left = left + "px";
+  _gTip.classList.add("visible");
+}
+
+function hideTooltip() {
+  _gTip.classList.remove('visible');
+}
+
+/* Override arrow position via CSS variable */
+const tipStyle = document.createElement('style');
+tipStyle.textContent = `.tooltip-box::after { left: var(--arrow-left, 50%); transform: translateX(-50%); }`;
+document.head.appendChild(tipStyle);
+
 /* ── TOOLTIP HTML HELPER ── */
-function tooltip(text) {
+function tooltip(key) {
   return `<span class="tooltip-wrap">
-    <span class="tooltip-icon" tabindex="0" role="button" aria-label="More info">?</span>
-    <span class="tooltip-box">${text}</span>
+    <span class="tooltip-icon" tabindex="0" role="button" aria-label="More info" data-tip="${TAX_TOOLTIPS[key].replace(/"/g,'&quot;')}">?</span>
   </span>`;
 }
 
-
-
 /* ── BREAKEVEN PRICE HTML ── */
+function calcBreakevenSellTurnover(tradeType, buyTurnover, lots, tier) {
+  // Solve S - B - totalCharges(B, S) = 0 analytically.
+  // All charges are linear in B and S, so we can isolate S exactly.
+  //
+  // Let r  = brokerage rate (or 0 for options — brokerage is fixed)
+  // Let k  = sttSell + exchangeRate + sebiRate + (r + exchRate + sebiRate)*0.18  [coefficients on S]
+  // Let fixedCosts = costs that depend only on B (brokerage on B-side, sttBuy, stamp, gst on B-side)
+  //
+  // Net PnL = S - B - [brokerage(B+S)*r + sttBuy*B + sttSell*S + exch*(B+S) + sebi*(B+S) + stamp*B + gst] = 0
+  // Rearranging: S * (1 - k) = B + fixedFromB
+  // => S = (B + fixedFromB) / (1 - k)
+
+  const B = buyTurnover;
+  const exchRate = EXCHANGE_CHARGES[tradeType];
+  const sebiRate = SEBI_FEE;
+  const sttSell  = STT_RATES[tradeType].sell;
+  const sttBuy   = STT_RATES[tradeType].buy  || 0;
+  const stamp    = STAMP_DUTY[tradeType];
+
+  let brokerRate, fixedBrokerage;
+  if (tradeType === 'options') {
+    // brokerage = lots * rate * 2 (both legs) — fully fixed, not dependent on S
+    brokerRate     = 0;
+    fixedBrokerage = lots * tier.options * 2;
+  } else {
+    const rateKey = tradeType === 'equity' ? 'delivery' : tradeType;
+    brokerRate     = tier[rateKey];
+    fixedBrokerage = 0;
+  }
+
+  // GST applies to: brokerage + exchangeCharge + sebiCharge (not STT/stamp)
+  // For the S-dependent part of those three: (brokerRate + exchRate + sebiRate) * S
+  const gstRateOnS = (brokerRate + exchRate + sebiRate) * 0.18;
+
+  // Total coefficient on S in the charges expression:
+  const kS = brokerRate + sttSell + exchRate + sebiRate + gstRateOnS;
+
+  // Fixed costs (all depend only on B, lots, or are constants):
+  const brokerOnB   = B * brokerRate;
+  const gstOnBSide  = (brokerOnB + B * exchRate + B * sebiRate + fixedBrokerage) * 0.18;
+  const fixedCosts  = B * sttBuy + B * stamp + brokerOnB + B * exchRate + B * sebiRate + fixedBrokerage + gstOnBSide;
+
+  // S = (B + fixedCosts) / (1 - kS)
+  const beSellTurnover = (B + fixedCosts) / (1 - kS);
+  return beSellTurnover;
+}
+
 function breakevenHTML(tradeType, buyTurnover, qty, lots, lotSize, tier, charges) {
   if (tradeType === 'options') {
-    // For options: what avg sell premium needed to break even?
     if (!lots || !lotSize) return '';
-    // Total cost = buy turnover + all charges on full trade
-    // We need: sell_turnover - buy_turnover - total_charges = 0
-    // total_charges themselves depend on sell premium → iterate once (simplified: use buy-side charges as approx)
-    const buyCharges = computeCharges(tier, tradeType, buyTurnover, buyTurnover, lots);
-    // break-even sell turnover = buy_turnover + buyCharges.totalCharges (approx)
-    const beTurnover = buyTurnover + buyCharges.totalCharges;
-    const bePremium  = beTurnover / (lots * lotSize);
+    const beSellTurnover = calcBreakevenSellTurnover(tradeType, buyTurnover, lots, tier);
+    const bePremium = beSellTurnover / (lots * lotSize);
     return `
       <div class="breakeven-banner">
         <i class="ti ti-equal"></i>
@@ -782,25 +920,16 @@ function breakevenHTML(tradeType, buyTurnover, qty, lots, lotSize, tier, charges
           <div class="breakeven-label">Approximate Break-even sell premium</div>
           <div class="breakeven-row">
             <span class="breakeven-val">${fmtINR(bePremium)}<span style="font-size:13px;font-weight:600">/unit</span></span>
-            <span class="breakeven-sub">Sell at this premium per unit to recover all charges</span>
+            <span class="breakeven-sub">Sell at this premium per unit for exactly zero net P&amp;L</span>
           </div>
         </div>
       </div>`;
   } else {
     if (!qty || !buyTurnover) return '';
-    // Break-even sell price per share:
-    // We need net P&L = 0, i.e. sell_turnover - buy_turnover - total_charges(sell_turnover) = 0
-    // Approximate: charges on sell side ≈ charges on buy side (symmetric brokerage)
-    // More precise: iterate
     const buyPx = buyTurnover / qty;
-    // Approx: bePrice = buyPx + totalCharges / qty
-    // But charges also change with sell price. Use fixed-point iteration (3 rounds is plenty)
-    let beSellPx = buyPx;
-    for (let i = 0; i < 4; i++) {
-      const c = computeCharges(tier, tradeType, buyTurnover, beSellPx * qty, 0);
-      beSellPx = buyPx + c.totalCharges / qty;
-    }
-    const profit = (beSellPx - buyPx).toFixed(2);
+    const beSellTurnover = calcBreakevenSellTurnover(tradeType, buyTurnover, 0, tier);
+    const beSellPx = beSellTurnover / qty;
+    const diff = beSellPx - buyPx;
     return `
       <div class="breakeven-banner">
         <i class="ti ti-equal"></i>
@@ -808,7 +937,7 @@ function breakevenHTML(tradeType, buyTurnover, qty, lots, lotSize, tier, charges
           <div class="breakeven-label">Approximate Break-even sell price</div>
           <div class="breakeven-row">
             <span class="breakeven-val">${fmtINR(beSellPx)}<span style="font-size:13px;font-weight:600">/share</span></span>
-            <span class="breakeven-sub">+${fmtINR(parseFloat(profit))} above buy price to cover all charges</span>
+            <span class="breakeven-sub">+${fmtINR(diff)} above buy price for exactly zero net P&amp;L</span>
           </div>
         </div>
       </div>`;
@@ -851,7 +980,6 @@ function copyResult() {
     const btn = document.getElementById('copyBtn');
     if (btn) { btn.classList.add('copied'); setTimeout(() => btn.classList.remove('copied'), 2000); }
   }).catch(() => {
-    // fallback for older browsers
     const ta = document.createElement('textarea');
     ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
     document.body.appendChild(ta); ta.select(); document.execCommand('copy');
@@ -995,23 +1123,23 @@ function calculate() {
         </div>
         <div class="tax-sub-rows" id="taxRows">
           <div class="sub-rrow">
-            <span class="rl">STT${tooltip(TAX_TOOLTIPS.stt)} <span style="font-size:11px">(Securities Transaction Tax)</span></span>
+            <span class="rl">STT${tooltip('stt')} <span style="font-size:11px">(Securities Transaction Tax)</span></span>
             <span class="rv">${fmtINR(stt)}</span>
           </div>
           <div class="sub-rrow">
-            <span class="rl">Exchange charges${tooltip(TAX_TOOLTIPS.exchange)}</span>
+            <span class="rl">Exchange charges${tooltip('exchange')}</span>
             <span class="rv">${fmtINR(exchangeCharge)}</span>
           </div>
           <div class="sub-rrow">
-            <span class="rl">SEBI turnover fee${tooltip(TAX_TOOLTIPS.sebi)}</span>
+            <span class="rl">SEBI turnover fee${tooltip('sebi')}</span>
             <span class="rv">${fmtINR(sebiCharge)}</span>
           </div>
           <div class="sub-rrow">
-            <span class="rl">GST${tooltip(TAX_TOOLTIPS.gst)} <span style="font-size:11px">(18% on broker + exchange + SEBI)</span></span>
+            <span class="rl">GST${tooltip('gst')} <span style="font-size:11px">(18% on broker + exchange + SEBI)</span></span>
             <span class="rv">${fmtINR(gst)}</span>
           </div>
           <div class="sub-rrow">
-            <span class="rl">Stamp duty${tooltip(TAX_TOOLTIPS.stamp)} <span style="font-size:11px">(on buy side)</span></span>
+            <span class="rl">Stamp duty${tooltip('stamp')} <span style="font-size:11px">(on buy side)</span></span>
             <span class="rv">${fmtINR(stampDuty)}</span>
           </div>
         </div>
@@ -1070,7 +1198,6 @@ function renderUpgradeSection(result) {
   }
 
   const { tradeType, buyTurnover, sellTurnover, lots, tier: currentTier, totalCharges } = result;
-  const rateMap = { equity: currentTier.displayEq, intraday: currentTier.displayIn, futures: currentTier.displayFu, options: currentTier.displayOp };
 
   let html = `
     <div class="current-plan-row">
@@ -1123,6 +1250,7 @@ function renderUpgradeSection(result) {
 }
 
 /* ── INIT ── */
+initTooltips();
 calculate();
 </script>
 </body>
