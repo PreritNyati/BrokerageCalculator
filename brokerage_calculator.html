@@ -34,7 +34,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* HEADER */
 header {
   background: var(--white); border-bottom: 1px solid var(--border);
   padding: 0 40px; height: 62px;
@@ -45,7 +44,6 @@ header {
 .logo img { height: 32px; }
 .logo-text { font-size: 20px; font-weight: 800; color: var(--accent); letter-spacing: -0.5px; display: none; }
 
-/* PAGE HEADER */
 .page-hdr {
   background: var(--white); border-bottom: 1px solid var(--border);
   padding: 24px 40px 22px;
@@ -53,34 +51,15 @@ header {
 .page-hdr h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 4px; }
 .page-hdr p  { font-size: 14px; color: var(--muted); }
 
-/* TIER BAR */
-.tier-bar {
-  background: var(--white); border-bottom: 1px solid var(--border);
-  padding: 11px 40px; display: flex; align-items: center; gap: 6px;
-  overflow-x: auto; scrollbar-width: none;
-}
-.tier-bar::-webkit-scrollbar { display: none; }
-.tb-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); white-space: nowrap; margin-right: 4px; }
-.tier-pill {
-  display: flex; align-items: center; gap: 6px; padding: 5px 13px;
-  border-radius: 100px; border: 1.5px solid var(--border); background: var(--white);
-  font-size: 12px; font-weight: 600; color: var(--muted); white-space: nowrap; transition: .2s;
-}
-.tier-pill .tdot { width: 7px; height: 7px; border-radius: 50%; background: var(--border); transition: .2s; }
-.tier-pill.active { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); }
-.tier-pill.active .tdot { background: var(--accent); }
-
-/* LAYOUT */
 .main {
   max-width: 1140px; margin: 32px auto; padding: 0 24px;
   display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;
 }
 @media(max-width:820px) {
   .main { grid-template-columns: 1fr; }
-  header, .page-hdr, .tier-bar { padding-left: 20px; padding-right: 20px; }
+  header, .page-hdr { padding-left: 20px; padding-right: 20px; }
 }
 
-/* CARD */
 .card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); box-shadow: var(--shadow-sm); overflow: hidden; }
 .card-hdr { padding: 20px 24px 0; display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
 .card-icon { width: 36px; height: 36px; border-radius: 10px; background: var(--accent-bg); display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
@@ -88,10 +67,58 @@ header {
 .card-hdr p  { font-size: 12px; color: var(--muted); margin-top: 1px; }
 .card-body   { padding: 0 24px 24px; }
 
-/* SECTION LABEL */
 .sec-label { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted2); margin-bottom: 10px; }
 
-/* TRADE TYPE TABS */
+.deposit-top {
+  background: linear-gradient(135deg, #fff8f6 0%, #fff2ee 100%);
+  border-bottom: 1px solid var(--accent-border);
+  padding: 18px 24px 16px;
+  position: relative;
+}
+.deposit-top::after {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--accent);
+  border-radius: 0 2px 2px 0;
+}
+.deposit-top-label {
+  font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+}
+.deposit-top-label i { font-size: 13px; }
+.deposit-top-row { display: flex; align-items: center; gap: 10px; }
+.deposit-input-wrap { flex: 1; position: relative; }
+.deposit-input-wrap .ipre {
+  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+  font-size: 15px; font-weight: 700; color: var(--accent); pointer-events: none;
+}
+#deposit_display {
+  width: 100%; padding: 11px 12px 11px 28px;
+  border: 1.5px solid var(--accent-border); border-radius: var(--rs);
+  background: var(--white); font: 700 16px/1 'Plus Jakarta Sans', sans-serif;
+  color: var(--text); outline: none; transition: .18s;
+  letter-spacing: -0.3px;
+}
+#deposit_display:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(232,66,23,.12); }
+#deposit_display::placeholder { color: var(--muted2); font-weight: 500; font-size: 14px; }
+#deposit_amt { display: none; }
+
+.plan-chip {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--white); border: 1.5px solid var(--accent-border);
+  border-radius: 100px; padding: 6px 12px; white-space: nowrap;
+  opacity: 0; transform: scale(.92); transition: .2s; pointer-events: none;
+  flex-shrink: 0;
+}
+.plan-chip.visible { opacity: 1; transform: scale(1); pointer-events: auto; }
+.plan-chip-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.plan-chip-name { font-size: 12px; font-weight: 700; color: var(--text); }
+.plan-chip-rate { font-size: 11px; color: var(--accent); font-weight: 600; }
+
+.deposit-hint { font-size: 11px; color: var(--muted2); margin-top: 8px; }
+
 .type-tabs {
   display: grid; grid-template-columns: repeat(4,1fr); gap: 5px;
   background: var(--bg); border: 1px solid var(--border);
@@ -105,56 +132,6 @@ header {
 .type-tabs label:hover { color: var(--accent); background: var(--accent-bg); }
 .type-tabs input[type="radio"]:checked + label { background: var(--white); color: var(--accent); box-shadow: var(--shadow-sm); }
 
-/* EXCHANGE */
-.exch-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 18px; }
-.exch-row input[type="radio"] { display: none; }
-.exch-row label {
-  display: block; text-align: center;
-  border: 1.5px solid var(--border); background: var(--white);
-  font-size: 13px; font-weight: 700; color: var(--muted);
-  padding: 10px; border-radius: var(--rs); cursor: pointer; transition: .18s;
-}
-.exch-row label:hover { border-color: var(--accent); color: var(--accent); }
-.exch-row input[type="radio"]:checked + label { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); }
-
-/* ── DEPOSIT + AUTO-DETECT PLAN ── */
-.deposit-field { margin-bottom: 6px; }
-.deposit-field label {
-  display: block; font-size: 11px; font-weight: 700;
-  letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;
-}
-.deposit-field label .hint { font-size: 10px; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--muted2); margin-left: 4px; }
-.deposit-field .iw { position: relative; }
-.deposit-field .ipre {
-  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
-  font-size: 13px; font-weight: 600; color: var(--muted2); pointer-events: none;
-}
-.deposit-field input[type="number"] {
-  width: 100%; padding: 10px 12px 10px 26px;
-  border: 1.5px solid var(--border); border-radius: var(--rs);
-  background: var(--white); font: 500 14px/1 inherit; color: var(--text); outline: none; transition: .18s;
-}
-.deposit-field input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
-.deposit-field input[type="number"]:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(232,66,23,.10); }
-.deposit-field input::placeholder { color: var(--muted2); }
-
-/* Plan auto-detect banner */
-.plan-banner {
-  display: none;
-  align-items: center; gap: 10px;
-  background: var(--accent-bg); border: 1px solid var(--accent-border);
-  border-radius: var(--rs); padding: 10px 14px; margin-bottom: 16px;
-  animation: fadeUp .2s ease both;
-}
-.plan-banner.visible { display: flex; }
-.pb-icon { font-size: 16px; color: var(--accent); flex-shrink: 0; }
-.pb-body { flex: 1; min-width: 0; }
-.pb-name { font-size: 13px; font-weight: 700; color: var(--text); }
-.pb-desc { font-size: 11px; color: var(--muted); margin-top: 1px; }
-.pb-rate { font-size: 13px; font-weight: 800; color: var(--accent); white-space: nowrap; flex-shrink: 0; }
-.deposit-hint { font-size: 11px; color: var(--muted2); margin-bottom: 14px; }
-
-/* FORM FIELDS */
 .field { margin-bottom: 14px; }
 .field:last-child { margin-bottom: 0; }
 label {
@@ -168,6 +145,18 @@ label .hint { font-size: 10px; font-weight: 500; letter-spacing: 0; text-transfo
   font-size: 13px; font-weight: 600; color: var(--muted2); pointer-events: none; user-select: none;
 }
 .ipre.sm { font-size: 10px; font-weight: 700; left: 9px; letter-spacing: .04em; }
+
+.fmt-input-wrap { position: relative; }
+.fmt-display {
+  width: 100%; padding: 10px 12px 10px 26px;
+  border: 1.5px solid var(--border); border-radius: var(--rs);
+  background: var(--white); font: 500 14px/1 'Plus Jakarta Sans', sans-serif;
+  color: var(--text); outline: none; transition: .18s; cursor: text;
+}
+.fmt-display:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(232,66,23,.10); }
+.fmt-display::placeholder { color: var(--muted2); }
+.fmt-display.has-value { font-weight: 600; }
+
 input[type="number"] {
   width: 100%; padding: 10px 12px 10px 26px;
   border: 1.5px solid var(--border); border-radius: var(--rs);
@@ -179,18 +168,158 @@ input::placeholder { color: var(--muted2); }
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .divider { height: 1px; background: var(--border-soft); margin: 16px 0; }
 
-/* SUBMIT BUTTON */
-.calc-btn {
-  width: 100%; padding: 13px; margin-top: 18px;
-  background: var(--accent); border: none; border-radius: var(--rs);
-  color: #fff; font: 700 15px/1 inherit; letter-spacing: .02em; cursor: pointer; transition: .18s;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
+.live-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+  color: var(--green); background: var(--green-bg); border: 1px solid var(--green-border);
+  border-radius: 100px; padding: 3px 9px; margin-bottom: 14px;
 }
-.calc-btn:hover { background: var(--accent-h); box-shadow: 0 4px 16px rgba(232,66,23,.28); transform: translateY(-1px); }
-.calc-btn:active { transform: translateY(0); }
-.calc-btn:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
+.live-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--green);
+  animation: pulse 1.4s ease infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
 
-/* ── RESULT PANEL ── */
+
+/* ── BREAKEVEN BANNER ── */
+.breakeven-banner {
+  background: #e8f4fd; border: 1px solid #b8d9f5;
+  border-radius: var(--rs); padding: 11px 14px; margin-bottom: 12px;
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.breakeven-banner i { color: #1a7bbf; font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.breakeven-content { flex: 1; }
+.breakeven-label { font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: #1a7bbf; margin-bottom: 3px; }
+.breakeven-row { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.breakeven-val { font-size: 16px; font-weight: 800; color: #1a5c90; letter-spacing: -0.3px; }
+.breakeven-sub { font-size: 11px; color: #3a85b5; }
+
+/* ── SHARE / COPY BUTTON ── */
+.share-bar {
+  display: flex; gap: 8px; margin-bottom: 12px;
+}
+.share-btn {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 9px 12px; border-radius: var(--rs); border: 1.5px solid var(--border);
+  background: var(--white); font: 600 12px/1 'Plus Jakarta Sans', sans-serif;
+  color: var(--muted); cursor: pointer; transition: .18s; letter-spacing: .02em;
+}
+.share-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
+.share-btn i { font-size: 14px; }
+.share-btn.copied { border-color: var(--green); color: var(--green); background: var(--green-bg); }
+.share-btn.copied i { animation: pop .2s ease; }
+@keyframes pop { 0%{transform:scale(1)} 50%{transform:scale(1.3)} 100%{transform:scale(1)} }
+
+/* ── TOOLTIP ── */
+.tooltip-wrap { position: relative; display: inline-flex; align-items: center; }
+.tooltip-icon {
+  width: 15px; height: 15px; border-radius: 50%;
+  background: var(--border-soft); border: 1px solid var(--border);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: var(--muted2);
+  cursor: help; margin-left: 5px; flex-shrink: 0;
+  transition: .15s; line-height: 1; user-select: none;
+}
+.tooltip-icon:hover { background: #e8f4fd; border-color: #b8d9f5; color: #1a7bbf; }
+.tooltip-box {
+  position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  background: #1a1f2e; color: #fff; border-radius: 8px;
+  padding: 9px 12px; font-size: 12px; line-height: 1.5; font-weight: 400;
+  width: 230px; pointer-events: none;
+  opacity: 0; visibility: hidden; transition: opacity .15s, visibility .15s;
+  box-shadow: 0 4px 16px rgba(0,0,0,.18);
+  z-index: 200; white-space: normal;
+}
+.tooltip-box::after {
+  content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+  border: 5px solid transparent; border-top-color: #1a1f2e;
+}
+.tooltip-wrap:hover .tooltip-box,
+.tooltip-wrap:focus-within .tooltip-box { opacity: 1; visibility: visible; }
+/* Flip tooltip if near bottom of viewport — handled with .flip class */
+.tooltip-box.flip {
+  bottom: auto; top: calc(100% + 8px);
+}
+.tooltip-box.flip::after {
+  top: auto; bottom: 100%; border-top-color: transparent; border-bottom-color: #1a1f2e;
+}
+
+/* UPGRADE SAVINGS */
+.upgrade-sec {
+  max-width: 1140px; margin: 0 auto 48px; padding: 0 24px;
+}
+.upgrade-sec-hdr {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 14px; flex-wrap: wrap; gap: 8px;
+}
+.upgrade-sec-hdr h2 { font-size: 18px; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 2px; }
+.upgrade-sec-hdr p  { font-size: 13px; color: var(--muted); }
+
+.current-plan-row {
+  background: var(--white); border: 1px solid var(--border); border-radius: var(--r);
+  padding: 14px 18px; margin-bottom: 12px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  box-shadow: var(--shadow-sm);
+  animation: fadeUp .22s ease both;
+}
+.cp-left { display: flex; align-items: center; gap: 12px; }
+.cp-dot  { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+.cp-title { font-size: 14px; font-weight: 700; }
+.cp-dep   { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.cp-rate-grid { display: flex; gap: 16px; flex-wrap: wrap; }
+.cp-rate-item { text-align: right; }
+.cp-rate-type { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--muted2); }
+.cp-rate-val  { font-size: 14px; font-weight: 800; color: var(--accent); }
+.cp-current-badge {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
+  background: var(--green-bg); color: #0a8a62; border: 1px solid var(--green-border);
+  border-radius: 100px; padding: 3px 9px;
+}
+
+.savings-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
+@media(max-width:820px) { .savings-grid { grid-template-columns: repeat(2,1fr); } }
+@media(max-width:480px) { .savings-grid { grid-template-columns: 1fr; } }
+
+.savings-card {
+  background: var(--white); border: 1px solid var(--border); border-radius: var(--r);
+  padding: 16px 14px; box-shadow: var(--shadow-sm); transition: .2s;
+  position: relative; overflow: hidden;
+}
+.savings-card:hover { border-color: var(--muted2); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(26,31,46,.1); }
+.savings-card.is-current { border-color: var(--accent); background: var(--accent-bg); }
+.savings-card.locked { opacity: .45; }
+.savings-card.locked::after { content: '🔒'; position: absolute; top: 10px; right: 10px; font-size: 13px; }
+
+.sc-tier { display: flex; align-items: center; gap: 7px; margin-bottom: 10px; }
+.sc-dot  { width: 8px; height: 8px; border-radius: 50%; }
+.sc-name { font-size: 13px; font-weight: 700; }
+.sc-dep  { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
+
+.sc-charge-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+.sc-charge-lbl { font-size: 11px; color: var(--muted); }
+.sc-charge-val { font-size: 13px; font-weight: 700; color: var(--text); }
+.sc-charge-val.accent { color: var(--accent); }
+
+.sc-divider { height: 1px; background: var(--border-soft); margin: 10px 0; }
+
+.sc-save-row { display: flex; align-items: center; justify-content: space-between; }
+.sc-save-pill {
+  font-size: 11px; font-weight: 700; border-radius: 5px; padding: 3px 8px;
+  background: var(--green-bg); color: #0a8a62; border: 1px solid var(--green-border);
+}
+.sc-save-pill.neutral { background: var(--bg); color: var(--muted); border-color: var(--border); }
+.sc-save-pill.locked-pill { background: var(--bg); color: var(--muted2); border-color: var(--border); }
+.sc-save-amt { font-size: 13px; font-weight: 800; }
+.sc-save-amt.green { color: var(--green); }
+.sc-save-amt.muted { color: var(--muted2); }
+
+.upgrade-placeholder {
+  background: var(--white); border: 1px dashed var(--border); border-radius: var(--r);
+  padding: 32px 20px; text-align: center; color: var(--muted); font-size: 13px;
+}
+.upgrade-placeholder i { font-size: 24px; color: var(--muted2); display: block; margin-bottom: 8px; }
+
+/* RESULT PANEL */
 .plan-strip {
   background: var(--accent-bg); border: 1px solid var(--accent-border);
   border-radius: var(--rs); padding: 12px 16px;
@@ -232,7 +361,7 @@ input::placeholder { color: var(--muted2); }
 .rg-hdr   { background: var(--bg); border-bottom: 1px solid var(--border); padding: 8px 14px; font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
 .rrow     { display: flex; justify-content: space-between; align-items: center; padding: 9px 14px; border-top: 1px solid var(--border-soft); font-size: 13px; }
 .rrow:first-child { border-top: none; }
-.rrow .rl { color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.rrow .rl { color: var(--muted); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .rrow .rv { font-weight: 600; color: var(--text); font-variant-numeric: tabular-nums; }
 
 .tax-expand-btn {
@@ -250,7 +379,7 @@ input::placeholder { color: var(--muted2); }
   padding: 7px 14px 7px 36px; border-top: 1px solid var(--border-soft);
   font-size: 12px; background: var(--bg);
 }
-.sub-rrow .rl { color: var(--muted2); }
+.sub-rrow .rl { color: var(--muted2); display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
 .sub-rrow .rv { font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
 
 .total-bar {
@@ -280,84 +409,6 @@ input::placeholder { color: var(--muted2); }
 .ph h3  { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
 .ph p   { font-size: 13px; color: var(--muted); }
 
-/* PRICING SECTION */
-.pricing-sec { max-width: 1140px; margin: 0 auto 48px; padding: 0 24px; }
-.pricing-header {
-  display: flex; align-items: flex-end; justify-content: space-between;
-  margin-bottom: 16px; flex-wrap: wrap; gap: 12px;
-}
-.pricing-header h2 { font-size: 20px; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 3px; }
-.pricing-header p  { font-size: 13px; color: var(--muted); }
-
-.filter-seg {
-  display: flex; background: var(--bg); border: 1px solid var(--border);
-  border-radius: 100px; padding: 3px; gap: 2px;
-}
-.filter-seg button {
-  font-size: 12px; font-weight: 600; border: none; background: transparent;
-  color: var(--muted); border-radius: 100px; padding: 5px 14px;
-  cursor: pointer; transition: .18s; font-family: inherit; white-space: nowrap;
-}
-.filter-seg button:hover { color: var(--accent); }
-.filter-seg button.active { background: var(--accent); color: #fff; }
-
-.plan-cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 12px; }
-@media(max-width:900px) { .plan-cards { grid-template-columns: repeat(3,1fr); } }
-@media(max-width:600px) { .plan-cards { grid-template-columns: repeat(2,1fr); } }
-
-.plan-card {
-  background: var(--white); border: 1px solid var(--border); border-radius: var(--r);
-  padding: 16px 14px; cursor: pointer; transition: .18s; position: relative;
-  box-shadow: var(--shadow-sm);
-}
-.plan-card:hover { border-color: var(--muted2); transform: translateY(-1px); }
-.plan-card.active { border: 2px solid var(--accent); background: var(--accent-bg); }
-
-.pc-badge {
-  display: inline-block; font-size: 11px; font-weight: 700; border-radius: 5px;
-  padding: 2px 8px; margin-bottom: 6px; background: var(--bg); color: var(--muted);
-  border: 1px solid var(--border); transition: .18s;
-}
-.plan-card.active .pc-badge { background: var(--accent); color: #fff; border-color: var(--accent); }
-
-.pc-deposit { font-size: 11px; color: var(--muted2); margin-bottom: 12px; line-height: 1.4; }
-.pc-rate    { font-size: 22px; font-weight: 800; color: var(--accent); line-height: 1; }
-.pc-type    { font-size: 11px; color: var(--muted); margin-top: 3px; }
-.pc-divider { height: 1px; background: var(--border-soft); margin: 10px 0; }
-.pc-save    {
-  display: inline-block; font-size: 10px; font-weight: 700;
-  background: var(--green-bg); color: #0a8a62; border: 1px solid var(--green-border);
-  border-radius: 4px; padding: 2px 7px;
-}
-
-.plan-detail {
-  background: var(--white); border: 1px solid var(--border); border-radius: var(--r);
-  box-shadow: var(--shadow-sm); overflow: hidden;
-}
-.pd-head {
-  padding: 12px 18px; background: var(--bg); border-bottom: 1px solid var(--border);
-  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;
-}
-.pd-head .pd-title { font-size: 14px; font-weight: 700; }
-.pd-head .pd-dep   { font-size: 12px; color: var(--muted); }
-.pd-grid { display: grid; grid-template-columns: repeat(4,1fr); }
-@media(max-width:600px) { .pd-grid { grid-template-columns: 1fr 1fr; } }
-.pd-cell {
-  padding: 14px 16px; border-right: 1px solid var(--border-soft); background: var(--white);
-}
-.pd-cell:last-child { border-right: none; }
-.pd-label { font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted2); margin-bottom: 5px; }
-.pd-val   { font-size: 20px; font-weight: 800; color: var(--accent); }
-.pd-val.dim { color: var(--text); }
-.pd-desc  { font-size: 11px; color: var(--muted); margin-top: 3px; }
-.pd-foot  {
-  padding: 10px 18px; background: var(--green-bg); border-top: 1px solid var(--green-border);
-  display: flex; justify-content: space-between; align-items: center;
-}
-.pd-foot .pf-l { font-size: 12px; color: var(--muted); }
-.pd-foot .pf-r { font-size: 13px; font-weight: 700; color: #0a8a62; }
-
-/* FOOTER */
 footer {
   background: var(--white); border-top: 1px solid var(--border);
   padding: 20px 40px; text-align: center; font-size: 12px; color: var(--muted);
@@ -366,6 +417,16 @@ footer a { color: var(--accent); text-decoration: none; }
 
 @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
 .anim { animation: fadeUp .28s ease both; }
+
+/* copy toast */
+.copy-toast {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(12px);
+  background: #1a1f2e; color: #fff; font-size: 13px; font-weight: 600;
+  padding: 10px 20px; border-radius: 100px; opacity: 0; pointer-events: none;
+  transition: opacity .22s, transform .22s; z-index: 9999;
+  display: flex; align-items: center; gap: 7px;
+}
+.copy-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 @media(max-width:480px) {
   .trade-strip { grid-template-columns: 1fr; }
@@ -389,16 +450,32 @@ footer a { color: var(--accent); text-decoration: none; }
   <p>Calculate exact brokerage and all regulatory charges based on your Swastika pricing tier.</p>
 </div>
 
-
-
 <div class="main">
 
   <!-- INPUT CARD -->
   <div class="card">
-    <div class="card-hdr">
-      <div><h2>Trade Details</h2><p>Fill in your trade parameters below</p></div>
+    <div class="deposit-top">
+      <div class="deposit-top-label">
+        <i class="ti ti-wallet"></i>
+        Funds deposited with Swastika
+      </div>
+      <div class="deposit-top-row">
+        <div class="deposit-input-wrap">
+          <span class="ipre" style="color:var(--accent);font-size:15px;font-weight:700">₹</span>
+          <input type="text" id="deposit_display" placeholder="e.g. 50,000" autocomplete="off"
+                 oninput="onDepositInput(this)" onblur="onDepositBlur(this)" onfocus="onDepositFocus(this)">
+          <input type="hidden" id="deposit_amt" value="">
+        </div>
+        <div class="plan-chip" id="planChip">
+          <div class="plan-chip-dot" id="planChipDot"></div>
+          <span class="plan-chip-name" id="planChipName"></span>
+          <span class="plan-chip-rate" id="planChipRate"></span>
+        </div>
+      </div>
+      <div class="deposit-hint">Your plan and brokerage rate update automatically as you type.</div>
     </div>
-    <div class="card-body">
+
+    <div class="card-body" style="padding-top:20px">
 
       <div class="sec-label">Trade Type</div>
       <div class="type-tabs">
@@ -414,51 +491,36 @@ footer a { color: var(--accent); text-decoration: none; }
 
       <div class="divider"></div>
 
-      <!-- DEPOSIT + AUTO-PLAN -->
-      <div class="deposit-field">
-        <label for="deposit_amt">
-          Funds deposited with Swastika
-          <span class="hint">— determines your pricing plan</span>
-        </label>
-        <div class="iw">
-          <span class="ipre">₹</span>
-          <input type="number" id="deposit_amt" placeholder="e.g. 50,000" min="0" step="1" oninput="onDepositChange()">
-        </div>
-      </div>
-      <p class="deposit-hint">Your plan and brokerage rate are set automatically based on this amount.</p>
-
-      <!-- AUTO-DETECTED PLAN BANNER -->
-      <div class="plan-banner" id="planBanner">
-        <i class="ti ti-discount-check pb-icon"></i>
-        <div class="pb-body">
-          <div class="pb-name" id="pbName"></div>
-          <div class="pb-desc" id="pbDesc"></div>
-        </div>
-        <div class="pb-rate" id="pbRate"></div>
+      <div class="live-badge">
+        <span class="live-dot"></span>
+        Live calculation
       </div>
 
-      <!-- TRADE INPUTS -->
       <div id="stdFields">
         <div class="field">
           <label for="qty">Quantity <span class="hint">— number of shares</span></label>
           <div class="iw">
             <span class="ipre sm">QTY</span>
-            <input type="number" id="qty" placeholder="100" min="1" step="1" style="padding-left:38px">
+            <input type="number" id="qty" placeholder="100" min="1" step="1" style="padding-left:38px" oninput="calculate()">
           </div>
         </div>
         <div class="two-col">
           <div class="field">
-            <label for="buy_price">Buy price (₹) <span class="hint">per share</span></label>
-            <div class="iw">
+            <label for="buy_display">Buy price (₹) <span class="hint">per share</span></label>
+            <div class="iw fmt-input-wrap">
               <span class="ipre">₹</span>
-              <input type="number" id="buy_price" placeholder="500.00" step="0.01" min="0">
+              <input type="text" id="buy_display" class="fmt-display" placeholder="500.00" autocomplete="off"
+                     oninput="onPriceInput(this,'buy_price')" onblur="onPriceBlur(this,'buy_price')" onfocus="onPriceFocus(this,'buy_price')">
+              <input type="hidden" id="buy_price" value="">
             </div>
           </div>
           <div class="field">
-            <label for="sell_price">Sell price (₹) <span class="hint">per share</span></label>
-            <div class="iw">
+            <label for="sell_display">Sell price (₹) <span class="hint">per share</span></label>
+            <div class="iw fmt-input-wrap">
               <span class="ipre">₹</span>
-              <input type="number" id="sell_price" placeholder="520.00" step="0.01" min="0">
+              <input type="text" id="sell_display" class="fmt-display" placeholder="520.00" autocomplete="off"
+                     oninput="onPriceInput(this,'sell_price')" onblur="onPriceBlur(this,'sell_price')" onfocus="onPriceFocus(this,'sell_price')">
+              <input type="hidden" id="sell_price" value="">
             </div>
           </div>
         </div>
@@ -470,41 +532,38 @@ footer a { color: var(--accent); text-decoration: none; }
             <label for="num_lots">No. of lots</label>
             <div class="iw">
               <span class="ipre sm" style="left:9px">LOTS</span>
-              <input type="number" id="num_lots" placeholder="1" min="1" step="1" style="padding-left:40px">
+              <input type="number" id="num_lots" placeholder="1" min="1" step="1" style="padding-left:40px" oninput="calculate()">
             </div>
           </div>
           <div class="field">
             <label for="lot_size">Lot size</label>
             <div class="iw">
               <span class="ipre sm" style="left:9px">SIZE</span>
-              <input type="number" id="lot_size" placeholder="50" min="1" step="1" style="padding-left:40px">
+              <input type="number" id="lot_size" placeholder="50" min="1" step="1" style="padding-left:40px" oninput="calculate()">
             </div>
           </div>
         </div>
         <div class="two-col">
           <div class="field">
-            <label for="opt_buy">Premium buy (₹)</label>
-            <div class="iw">
+            <label for="opt_buy_display">Premium buy (₹)</label>
+            <div class="iw fmt-input-wrap">
               <span class="ipre">₹</span>
-              <input type="number" id="opt_buy" placeholder="200.00" step="0.01" min="0">
+              <input type="text" id="opt_buy_display" class="fmt-display" placeholder="200.00" autocomplete="off"
+                     oninput="onPriceInput(this,'opt_buy')" onblur="onPriceBlur(this,'opt_buy')" onfocus="onPriceFocus(this,'opt_buy')">
+              <input type="hidden" id="opt_buy" value="">
             </div>
           </div>
           <div class="field">
-            <label for="opt_sell">Premium sell (₹)</label>
-            <div class="iw">
+            <label for="opt_sell_display">Premium sell (₹)</label>
+            <div class="iw fmt-input-wrap">
               <span class="ipre">₹</span>
-              <input type="number" id="opt_sell" placeholder="240.00" step="0.01" min="0">
+              <input type="text" id="opt_sell_display" class="fmt-display" placeholder="240.00" autocomplete="off"
+                     oninput="onPriceInput(this,'opt_sell')" onblur="onPriceBlur(this,'opt_sell')" onfocus="onPriceFocus(this,'opt_sell')">
+              <input type="hidden" id="opt_sell" value="">
             </div>
           </div>
         </div>
       </div>
-
-      <button class="calc-btn" id="calcBtn" onclick="calculate()">
-        Calculate Charges
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M3 8h10M9 4l4 4-4 4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
 
     </div>
   </div>
@@ -513,14 +572,14 @@ footer a { color: var(--accent); text-decoration: none; }
   <div class="card">
     <div class="card-hdr">
       <div class="card-icon">📊</div>
-      <div><h2>Charge Breakdown</h2><p>Your complete cost analysis</p></div>
+      <div><h2>Charge Breakdown</h2><p>Updates instantly as you type</p></div>
     </div>
     <div class="card-body">
       <div id="resultPlaceholder">
         <div class="ph">
           <div class="ph-ico">🧮</div>
           <h3>Ready to Calculate</h3>
-          <p>Enter your trade details and click<br><strong>Calculate Charges</strong> to see your breakdown.</p>
+          <p>Enter your deposit and trade details above — results appear instantly.</p>
         </div>
       </div>
       <div id="resultPanel" style="display:none"></div>
@@ -529,28 +588,30 @@ footer a { color: var(--accent); text-decoration: none; }
 
 </div>
 
-<!-- PRICING SECTION -->
-<div class="pricing-sec">
-  <div class="pricing-header">
+<div class="upgrade-sec">
+  <div class="upgrade-sec-hdr">
     <div>
-      <h2>Smart pricing plans</h2>
-      <p>Your rate adjusts automatically as your deposit grows. Click a plan to see all rates.</p>
-    </div>
-    <div class="filter-seg" id="filterSeg">
-      <button class="active" onclick="setPricingFilter(this,'equity')">Equity</button>
-      <button onclick="setPricingFilter(this,'intraday')">Intraday</button>
-      <button onclick="setPricingFilter(this,'futures')">Futures</button>
-      <button onclick="setPricingFilter(this,'options')">Options</button>
+      <h2>How much would you save per tier?</h2>
+      <p>See the exact charge difference on <strong>this trade</strong> across all Swastika plans.</p>
     </div>
   </div>
-  <div class="plan-cards" id="planCards"></div>
-  <div id="planDetail"></div>
+  <div id="upgradeContent">
+    <div class="upgrade-placeholder">
+      <i class="ti ti-receipt-2"></i>
+      Enter your trade details above to see per-tier savings on this specific trade.
+    </div>
+  </div>
 </div>
 
 <footer>
-  
   <p style="margin-top:6px">Pricing data sourced from <a href="https://www.swastika.co.in/pricing-plan" target="_blank">Swastika Smart Pricing Plan</a></p>
 </footer>
+
+<!-- Copy toast -->
+<div class="copy-toast" id="copyToast">
+  <i class="ti ti-check"></i>
+  <span id="copyToastMsg">Result copied!</span>
+</div>
 
 <script>
 /* ── DATA ── */
@@ -562,7 +623,7 @@ const TIERS = [
   { id:'titan',   name:'Titan',   deposit:'₹10,00,000+',             depositShort:'₹10L+',    min:1000000, max:Infinity, color:'#0aaa76', delivery:0.0007, intraday:0.00007, futures:0.00007, options:7,  displayEq:'0.07%', displayIn:'0.007%', displayFu:'0.007%', displayOp:'₹7/lot',  save:'86%' },
 ];
 
-const EXCHANGE_CHARGES = { equity:0.0000297, intraday:0.0000297, futures:0.0000173, options:0.0003503 }
+const EXCHANGE_CHARGES = { equity:0.0000297, intraday:0.0000297, futures:0.0000173, options:0.0003503 };
 const STT_RATES = {
   equity:   { buy:0.001,  sell:0.001   },
   intraday: { buy:0,      sell:0.00025 },
@@ -572,141 +633,311 @@ const STT_RATES = {
 const STAMP_DUTY = { equity:0.00015, intraday:0.00003, futures:0.00002, options:0.00003 };
 const SEBI_FEE   = 0.000001;
 
-/* State */
-let selectedTierId = null; // null = no deposit entered yet
+/* Tooltip text for each tax line */
+const TAX_TOOLTIPS = {
+  stt:      'Securities Transaction Tax — levied by the government on every buy/sell transaction of listed securities. It is a direct tax paid to the Income Tax department.',
+  exchange: 'Fees charged by NSE/BSE for facilitating the trade on their platform. Calculated as a percentage of total turnover.',
+  sebi:     'A tiny regulatory fee charged by SEBI (Securities and Exchange Board of India) on all trades to fund market regulation activities.',
+  gst:      'Goods & Services Tax at 18% levied on the brokerage, exchange charges, and SEBI fee — not on the full trade value.',
+  stamp:    'Stamp duty is a state-level tax on the buy-side of a transaction. It is collected by the exchange on behalf of the state government.',
+};
 
+/* ── STATE ── */
+let selectedTierId = null;
+let lastCalcResult = null;
+
+/* ── HELPERS ── */
 function getSelectedTier() {
-  return TIERS.find(function(t) { return t.id === selectedTierId; }) || TIERS[0];
+  return TIERS.find(t => t.id === selectedTierId) || TIERS[0];
 }
 function fmtINR(n) {
   return '₹' + Math.abs(n).toLocaleString('en-IN', { minimumFractionDigits:2, maximumFractionDigits:2 });
 }
-function fv(id) { return parseFloat(document.getElementById(id).value) || 0; }
-function iv(id) { return parseInt(document.getElementById(id).value)   || 0; }
-
-/* ── DEPOSIT AUTO-DETECT ── */
-function onDepositChange() {
-  var dep = parseFloat(document.getElementById('deposit_amt').value);
-  var banner  = document.getElementById('planBanner');
-  var tradeType = document.querySelector('input[name="trade_type"]:checked').value;
-
-  if (!dep || dep < 0) {
-    banner.classList.remove('visible');
-    selectedTierId = null;
-    syncTierBar(null);
-    return;
-  }
-
-  var tier = TIERS.find(function(t) { return dep >= t.min && dep <= t.max; }) || TIERS[0];
-  selectedTierId = tier.id;
-
-  /* Rate for current trade type */
-  var rateMap = { equity: tier.displayEq, intraday: tier.displayIn, futures: tier.displayFu, options: tier.displayOp };
-  var rateLabel = rateMap[tradeType] || tier.displayEq;
-  var typeLabel = { equity:'Equity delivery', intraday:'Intraday', futures:'Futures', options:'Options' }[tradeType];
-
-  document.getElementById('pbName').textContent = tier.name + ' plan';
-  document.getElementById('pbDesc').textContent = tier.deposit;
-  document.getElementById('pbRate').textContent = rateLabel + ' · ' + typeLabel;
-  banner.classList.add('visible');
-  syncTierBar(tier.id);
+function hv(id) {
+  const el = document.getElementById(id);
+  return el ? (parseFloat(el.value) || 0) : 0;
 }
+function iv(id) { return parseInt(document.getElementById(id).value) || 0; }
 
-/* Also update banner rate label when trade type changes */
-function onTradeTypeChange() {
-  var val = document.querySelector('input[name="trade_type"]:checked').value;
-  document.getElementById('stdFields').style.display = val === 'options' ? 'none' : 'block';
-  document.getElementById('optFields').style.display = val === 'options' ? 'block' : 'none';
-  /* refresh banner if deposit is already filled */
-  if (document.getElementById('deposit_amt').value) {
-    onDepositChange();
-  }
-}
-
-function syncTierBar(id) {
-  document.querySelectorAll('.tier-pill').forEach(function(p) {
-    p.classList.toggle('active', p.dataset.plan === id);
+function fmtIndian(num, decimals) {
+  if (isNaN(num)) return '';
+  return num.toLocaleString('en-IN', {
+    minimumFractionDigits: decimals !== undefined ? decimals : 0,
+    maximumFractionDigits: decimals !== undefined ? decimals : 2
   });
 }
 
-/* ── CALCULATE ── */
+function onDepositInput(el) {
+  const raw = el.value.replace(/,/g, '');
+  const num = parseFloat(raw);
+  document.getElementById('deposit_amt').value = isNaN(num) ? '' : num;
+  updatePlanFromDeposit(isNaN(num) ? NaN : num);
+  calculate();
+}
+function onDepositFocus(el) {
+  const raw = el.value.replace(/,/g, '');
+  el.value = raw === '' ? '' : raw;
+}
+function onDepositBlur(el) {
+  const raw = el.value.replace(/,/g, '');
+  const num = parseFloat(raw);
+  if (!isNaN(num) && num >= 0) el.value = fmtIndian(num, 0);
+}
+
+function onPriceInput(el, hiddenId) {
+  const raw = el.value.replace(/,/g, '');
+  const num = parseFloat(raw);
+  document.getElementById(hiddenId).value = isNaN(num) ? '' : num;
+  el.classList.toggle('has-value', !isNaN(num) && raw !== '');
+  calculate();
+}
+function onPriceFocus(el, hiddenId) {
+  const raw = el.value.replace(/,/g, '');
+  el.value = raw === '' ? '' : raw;
+}
+function onPriceBlur(el, hiddenId) {
+  const raw = el.value.replace(/,/g, '');
+  const num = parseFloat(raw);
+  if (!isNaN(num) && num >= 0) {
+    el.value = fmtIndian(num, 2);
+    el.classList.add('has-value');
+  } else {
+    el.value = '';
+    el.classList.remove('has-value');
+  }
+}
+
+/* ── DEPOSIT AUTO-DETECT ── */
+function updatePlanFromDeposit(dep) {
+  const chip = document.getElementById('planChip');
+  if (isNaN(dep) || dep < 0) { chip.classList.remove('visible'); selectedTierId = null; return; }
+  const tier = TIERS.find(t => dep >= t.min && dep <= t.max) || TIERS[0];
+  selectedTierId = tier.id;
+  const tradeType = document.querySelector('input[name="trade_type"]:checked').value;
+  const rateMap = { equity: tier.displayEq, intraday: tier.displayIn, futures: tier.displayFu, options: tier.displayOp };
+  document.getElementById('planChipDot').style.background = tier.color;
+  document.getElementById('planChipName').textContent = tier.name;
+  document.getElementById('planChipRate').textContent = rateMap[tradeType];
+  chip.classList.add('visible');
+}
+
+function onTradeTypeChange() {
+  const val = document.querySelector('input[name="trade_type"]:checked').value;
+  document.getElementById('stdFields').style.display = val === 'options' ? 'none' : 'block';
+  document.getElementById('optFields').style.display = val === 'options' ? 'block' : 'none';
+  const depRaw = document.getElementById('deposit_display').value.replace(/,/g,'');
+  const dep = parseFloat(depRaw);
+  if (!isNaN(dep)) updatePlanFromDeposit(dep);
+  calculate();
+}
+
+/* ── COMPUTE CHARGES ── */
+function computeCharges(tier, tradeType, buyTurnover, sellTurnover, lots) {
+  const totalTurnover = buyTurnover + sellTurnover;
+  let brokerage;
+  if (tradeType === 'options') {
+    brokerage = lots * tier.options * 2;
+  } else {
+    const rateKey = tradeType === 'equity' ? 'delivery' : tradeType;
+    brokerage = totalTurnover * tier[rateKey];
+  }
+  const stt = tradeType === 'equity'
+    ? buyTurnover * STT_RATES.equity.buy + sellTurnover * STT_RATES.equity.sell
+    : sellTurnover * STT_RATES[tradeType].sell;
+  const exchangeCharge = totalTurnover * EXCHANGE_CHARGES[tradeType];
+  const sebiCharge     = totalTurnover * SEBI_FEE;
+  const stampDuty      = buyTurnover * STAMP_DUTY[tradeType];
+  const gst            = (brokerage + exchangeCharge + sebiCharge) * 0.18;
+  const taxesTotal     = stt + exchangeCharge + sebiCharge + gst + stampDuty;
+  const totalCharges   = brokerage + taxesTotal;
+  return { brokerage, stt, exchangeCharge, sebiCharge, stampDuty, gst, taxesTotal, totalCharges };
+}
+
+/* ── TOOLTIP HTML HELPER ── */
+function tooltip(text) {
+  return `<span class="tooltip-wrap">
+    <span class="tooltip-icon" tabindex="0" role="button" aria-label="More info">?</span>
+    <span class="tooltip-box">${text}</span>
+  </span>`;
+}
+
+
+
+/* ── BREAKEVEN PRICE HTML ── */
+function breakevenHTML(tradeType, buyTurnover, qty, lots, lotSize, tier, charges) {
+  if (tradeType === 'options') {
+    // For options: what avg sell premium needed to break even?
+    if (!lots || !lotSize) return '';
+    // Total cost = buy turnover + all charges on full trade
+    // We need: sell_turnover - buy_turnover - total_charges = 0
+    // total_charges themselves depend on sell premium → iterate once (simplified: use buy-side charges as approx)
+    const buyCharges = computeCharges(tier, tradeType, buyTurnover, buyTurnover, lots);
+    // break-even sell turnover = buy_turnover + buyCharges.totalCharges (approx)
+    const beTurnover = buyTurnover + buyCharges.totalCharges;
+    const bePremium  = beTurnover / (lots * lotSize);
+    return `
+      <div class="breakeven-banner">
+        <i class="ti ti-equal"></i>
+        <div class="breakeven-content">
+          <div class="breakeven-label">Approximate Break-even sell premium</div>
+          <div class="breakeven-row">
+            <span class="breakeven-val">${fmtINR(bePremium)}<span style="font-size:13px;font-weight:600">/unit</span></span>
+            <span class="breakeven-sub">Sell at this premium per unit to recover all charges</span>
+          </div>
+        </div>
+      </div>`;
+  } else {
+    if (!qty || !buyTurnover) return '';
+    // Break-even sell price per share:
+    // We need net P&L = 0, i.e. sell_turnover - buy_turnover - total_charges(sell_turnover) = 0
+    // Approximate: charges on sell side ≈ charges on buy side (symmetric brokerage)
+    // More precise: iterate
+    const buyPx = buyTurnover / qty;
+    // Approx: bePrice = buyPx + totalCharges / qty
+    // But charges also change with sell price. Use fixed-point iteration (3 rounds is plenty)
+    let beSellPx = buyPx;
+    for (let i = 0; i < 4; i++) {
+      const c = computeCharges(tier, tradeType, buyTurnover, beSellPx * qty, 0);
+      beSellPx = buyPx + c.totalCharges / qty;
+    }
+    const profit = (beSellPx - buyPx).toFixed(2);
+    return `
+      <div class="breakeven-banner">
+        <i class="ti ti-equal"></i>
+        <div class="breakeven-content">
+          <div class="breakeven-label">Approximate Break-even sell price</div>
+          <div class="breakeven-row">
+            <span class="breakeven-val">${fmtINR(beSellPx)}<span style="font-size:13px;font-weight:600">/share</span></span>
+            <span class="breakeven-sub">+${fmtINR(parseFloat(profit))} above buy price to cover all charges</span>
+          </div>
+        </div>
+      </div>`;
+  }
+}
+
+/* ── SHARE / COPY ── */
+function buildShareText(result, charges) {
+  const { tradeType, buyTurnover, sellTurnover, tier, netPnl } = result;
+  const { brokerage, stt, exchangeCharge, sebiCharge, stampDuty, gst, totalCharges } = charges;
+  const lines = [
+    `📊 Swastika Brokerage Calculator — ${tier.name} Plan`,
+    `Trade: ${tradeType.charAt(0).toUpperCase()+tradeType.slice(1)}`,
+    ``,
+    `Buy value:       ${fmtINR(buyTurnover)}`,
+    `Sell value:      ${fmtINR(sellTurnover)}`,
+    ``,
+    `Brokerage:       ${fmtINR(brokerage)}`,
+    `STT:             ${fmtINR(stt)}`,
+    `Exchange:        ${fmtINR(exchangeCharge)}`,
+    `SEBI fee:        ${fmtINR(sebiCharge)}`,
+    `GST:             ${fmtINR(gst)}`,
+    `Stamp duty:      ${fmtINR(stampDuty)}`,
+    `─────────────────────────────`,
+    `Total charges:   ${fmtINR(totalCharges)}`,
+    `Net P&L:         ${netPnl >= 0 ? '+' : '−'}${fmtINR(netPnl)}`,
+    ``,
+    `Calculated at swastika.co.in`,
+  ];
+  return lines.join('\n');
+}
+
+function copyResult() {
+  if (!lastCalcResult) return;
+  const { tradeType, buyTurnover, sellTurnover, lots, tier } = lastCalcResult;
+  const charges = computeCharges(tier, tradeType, buyTurnover, sellTurnover, lots);
+  const text = buildShareText(lastCalcResult, charges);
+  navigator.clipboard.writeText(text).then(() => {
+    showToast('Result copied to clipboard!');
+    const btn = document.getElementById('copyBtn');
+    if (btn) { btn.classList.add('copied'); setTimeout(() => btn.classList.remove('copied'), 2000); }
+  }).catch(() => {
+    // fallback for older browsers
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast('Result copied!');
+  });
+}
+
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('copyToast');
+  document.getElementById('copyToastMsg').textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+/* ── LIVE CALCULATE ── */
 function calculate() {
-  /* Require deposit to be filled first */
   if (!selectedTierId) {
-    var depositInput = document.getElementById('deposit_amt');
-    depositInput.focus();
-    depositInput.style.borderColor = 'var(--accent)';
-    depositInput.style.boxShadow = '0 0 0 3px rgba(232,66,23,.15)';
-    setTimeout(function() {
-      depositInput.style.borderColor = '';
-      depositInput.style.boxShadow = '';
-    }, 1800);
+    document.getElementById('resultPlaceholder').style.display = '';
+    document.getElementById('resultPanel').style.display = 'none';
+    renderUpgradeSection(null);
     return;
   }
 
-  var tradeType = document.querySelector('input[name="trade_type"]:checked').value;
-  var tier      = getSelectedTier();
+  const tradeType = document.querySelector('input[name="trade_type"]:checked').value;
+  const tier = getSelectedTier();
 
-  var buyTurnover, sellTurnover, brokerage, rateDisplay, qty, buyPx, sellPx;
+  let buyTurnover, sellTurnover, lots, qty, lotSize, buyPx, sellPx, rateDisplay, buyDetail, sellDetail;
 
   if (tradeType === 'options') {
-    var lots = iv('num_lots');
-    var size = iv('lot_size');
-    buyPx        = fv('opt_buy');
-    sellPx       = fv('opt_sell');
-    buyTurnover  = lots * size * buyPx;
-    sellTurnover = lots * size * sellPx;
-    brokerage    = lots * tier.options * 2;
+    lots        = iv('num_lots');
+    lotSize     = iv('lot_size');
+    buyPx       = hv('opt_buy');
+    sellPx      = hv('opt_sell');
+    buyTurnover  = lots * lotSize * buyPx;
+    sellTurnover = lots * lotSize * sellPx;
     rateDisplay  = '₹' + tier.options + '/lot';
-    qty          = lots * size;
+    qty          = lots * lotSize;
+    buyDetail    = lots + ' lot(s) × ' + lotSize + ' at ₹' + (buyPx ? fmtIndian(buyPx,2) : '—');
+    sellDetail   = lots + ' lot(s) × ' + lotSize + ' at ₹' + (sellPx ? fmtIndian(sellPx,2) : '—');
   } else {
     qty          = iv('qty');
-    buyPx        = fv('buy_price');
-    sellPx       = fv('sell_price');
+    buyPx        = hv('buy_price');
+    sellPx       = hv('sell_price');
     buyTurnover  = qty * buyPx;
     sellTurnover = qty * sellPx;
-    var rateKey  = tradeType === 'equity' ? 'delivery' : tradeType;
-    brokerage    = (buyTurnover + sellTurnover) * tier[rateKey];
-    rateDisplay  = (tier[rateKey] * 100).toFixed(tradeType === 'equity' ? 2 : 3) + '%';
+    lotSize      = 0;
+    const rateKey = tradeType === 'equity' ? 'delivery' : tradeType;
+    rateDisplay   = (tier[rateKey] * 100).toFixed(tradeType === 'equity' ? 2 : 3) + '%';
+    lots          = 0;
+    buyDetail     = qty + ' shares at ₹' + (buyPx ? fmtIndian(buyPx,2) : '—');
+    sellDetail    = qty + ' shares at ₹' + (sellPx ? fmtIndian(sellPx,2) : '—');
   }
 
-  var totalTurnover  = buyTurnover + sellTurnover;
-  var grossPnl       = sellTurnover - buyTurnover;
-  var stt            = tradeType === 'equity'
-                       ? buyTurnover * STT_RATES.equity.buy + sellTurnover * STT_RATES.equity.sell
-                       : sellTurnover * STT_RATES[tradeType].sell;
-  var exchangeCharge = totalTurnover * EXCHANGE_CHARGES[tradeType];
-  var sebiCharge     = totalTurnover * SEBI_FEE;
-  var stampDuty      = buyTurnover * STAMP_DUTY[tradeType];
-  var gst            = (brokerage + exchangeCharge + sebiCharge) * 0.18;
-  var taxesTotal     = stt + exchangeCharge + sebiCharge + gst + stampDuty;
-  var totalCharges   = brokerage + taxesTotal;
-  var netPnl         = grossPnl - totalCharges;
-  var isProfit       = netPnl >= 0;
-  var isGrossProfit  = grossPnl >= 0;
-
-  var buyDetail, sellDetail;
-  if (tradeType === 'options') {
-    buyDetail  = iv('num_lots') + ' lot(s) × ' + iv('lot_size') + ' at ₹' + fv('opt_buy').toLocaleString('en-IN');
-    sellDetail = iv('num_lots') + ' lot(s) × ' + iv('lot_size') + ' at ₹' + fv('opt_sell').toLocaleString('en-IN');
-  } else {
-    buyDetail  = qty + ' shares at ₹' + buyPx.toLocaleString('en-IN');
-    sellDetail = qty + ' shares at ₹' + sellPx.toLocaleString('en-IN');
+  if (buyTurnover === 0 && sellTurnover === 0) {
+    document.getElementById('resultPlaceholder').style.display = '';
+    document.getElementById('resultPanel').style.display = 'none';
+    renderUpgradeSection(null);
+    return;
   }
 
-  var grossIconClass = isGrossProfit ? 'ti ti-trending-up' : 'ti ti-trending-down';
-  var grossIconBg    = isGrossProfit ? '#edfaf5' : '#fff2ee';
-  var grossIconColor = isGrossProfit ? '#0db07d' : '#e84217';
-  var grossLabel     = isGrossProfit ? 'Profit before fees' : 'Loss before fees';
-  var pnlSub         = isProfit
+  const charges = computeCharges(tier, tradeType, buyTurnover, sellTurnover, lots);
+  const { brokerage, stt, exchangeCharge, sebiCharge, stampDuty, gst, taxesTotal, totalCharges } = charges;
+
+  const grossPnl      = sellTurnover - buyTurnover;
+  const netPnl        = grossPnl - totalCharges;
+  const isProfit      = netPnl >= 0;
+  const isGrossProfit = grossPnl >= 0;
+
+  lastCalcResult = { tradeType, buyTurnover, sellTurnover, lots, lotSize, qty, tier, totalCharges, netPnl };
+
+  const grossIconClass = isGrossProfit ? 'ti ti-trending-up' : 'ti ti-trending-down';
+  const grossIconBg    = isGrossProfit ? '#edfaf5' : '#fff2ee';
+  const grossIconColor = isGrossProfit ? '#0db07d' : '#e84217';
+  const pnlSub         = isProfit
     ? 'Profit after ' + fmtINR(totalCharges) + ' in total charges'
     : 'Loss amplified by ' + fmtINR(totalCharges) + ' in charges';
+
+  const breakevenHtml = breakevenHTML(tradeType, buyTurnover, qty, lots, lotSize, tier, charges);
 
   document.getElementById('resultPlaceholder').style.display = 'none';
   document.getElementById('resultPanel').style.display = 'block';
   document.getElementById('resultPanel').innerHTML = `
     <div class="anim">
-
       <div class="plan-strip">
         <div class="ps-left">
           <div class="ps-dot" style="background:${tier.color}"></div>
@@ -741,8 +972,8 @@ function calculate() {
             <i class="${grossIconClass}" style="font-size:17px;color:${grossIconColor}"></i>
           </div>
           <div>
-            <div class="pnl-label">${grossLabel}</div>
-            <div class="pnl-sub">Sell value minus buy value</div>
+            <div class="pnl-label">Gross P&amp;L</div>
+            <div class="pnl-sub">Sell value minus buy value, before charges</div>
           </div>
         </div>
         <div class="pnl-val" style="color:${isGrossProfit ? '#0db07d' : '#e84217'}">${isGrossProfit ? '+' : '−'}${fmtINR(grossPnl)}</div>
@@ -763,11 +994,26 @@ function calculate() {
           <span class="rv">${fmtINR(taxesTotal)}</span>
         </div>
         <div class="tax-sub-rows" id="taxRows">
-          <div class="sub-rrow"><span class="rl">STT <span style="font-size:11px">(Securities Transaction Tax)</span></span><span class="rv">${fmtINR(stt)}</span></div>
-          <div class="sub-rrow"><span class="rl">Exchange charges</span><span class="rv">${fmtINR(exchangeCharge)}</span></div>
-          <div class="sub-rrow"><span class="rl">SEBI turnover fee</span><span class="rv">${fmtINR(sebiCharge)}</span></div>
-          <div class="sub-rrow"><span class="rl">GST <span style="font-size:11px">(18% on broker + exchange + SEBI)</span></span><span class="rv">${fmtINR(gst)}</span></div>
-          <div class="sub-rrow"><span class="rl">Stamp duty <span style="font-size:11px">(on buy side)</span></span><span class="rv">${fmtINR(stampDuty)}</span></div>
+          <div class="sub-rrow">
+            <span class="rl">STT${tooltip(TAX_TOOLTIPS.stt)} <span style="font-size:11px">(Securities Transaction Tax)</span></span>
+            <span class="rv">${fmtINR(stt)}</span>
+          </div>
+          <div class="sub-rrow">
+            <span class="rl">Exchange charges${tooltip(TAX_TOOLTIPS.exchange)}</span>
+            <span class="rv">${fmtINR(exchangeCharge)}</span>
+          </div>
+          <div class="sub-rrow">
+            <span class="rl">SEBI turnover fee${tooltip(TAX_TOOLTIPS.sebi)}</span>
+            <span class="rv">${fmtINR(sebiCharge)}</span>
+          </div>
+          <div class="sub-rrow">
+            <span class="rl">GST${tooltip(TAX_TOOLTIPS.gst)} <span style="font-size:11px">(18% on broker + exchange + SEBI)</span></span>
+            <span class="rv">${fmtINR(gst)}</span>
+          </div>
+          <div class="sub-rrow">
+            <span class="rl">Stamp duty${tooltip(TAX_TOOLTIPS.stamp)} <span style="font-size:11px">(on buy side)</span></span>
+            <span class="rv">${fmtINR(stampDuty)}</span>
+          </div>
         </div>
       </div>
 
@@ -779,90 +1025,105 @@ function calculate() {
         <div class="tb-val">${fmtINR(totalCharges)}</div>
       </div>
 
+      ${breakevenHtml}
+
+      <div class="share-bar">
+        <button class="share-btn" id="copyBtn" onclick="copyResult()">
+          <i class="ti ti-copy"></i> Copy result
+        </button>
+      </div>
+
       <div class="pnl-box ${isProfit ? 'profit' : 'loss'}">
         <div class="pnl-lbl">Net P&amp;L — after all charges</div>
         <div class="pnl-val">${netPnl >= 0 ? '+' : '−'}${fmtINR(netPnl)}</div>
         <div class="pnl-sub">${pnlSub}</div>
       </div>
-      <div id="resultDisclaimer" ; margin-top:12px; padding: 0 2px;">
-        <br>
-        <p style="font-size:11px; color:var(--muted2); line-height:1.6;">*Exchange charges are calculated for NSE.</p>
-        <p style="font-size:11px; color:var(--muted2); line-height:1.6; margin-top:3px;">**Charges are indicative. STT, exchange fees, and stamp duty are per SEBI/Exchange guidelines.</p>
+
+      <div style="margin-top:12px;padding:0 2px">
+        <p style="font-size:11px;color:var(--muted2);line-height:1.6">*Exchange charges are calculated for NSE.</p>
+        <p style="font-size:11px;color:var(--muted2);line-height:1.6;margin-top:3px">**Charges are indicative. STT, exchange fees, and stamp duty are per SEBI/Exchange guidelines.</p>
+      </div>
     </div>
   `;
+
+  renderUpgradeSection(lastCalcResult);
 }
 
 function toggleTax() {
-  var rows = document.getElementById('taxRows');
-  var btn  = document.getElementById('taxBtn');
+  const rows = document.getElementById('taxRows');
+  const btn  = document.getElementById('taxBtn');
   if (!rows) return;
-  var open = rows.classList.toggle('open');
+  const open = rows.classList.toggle('open');
   btn.classList.toggle('open', open);
 }
 
-/* ── PRICING CARDS ── */
-const TYPE_LABELS = { equity:'Equity delivery', intraday:'Intraday', futures:'Futures', options:'Options' };
-const TYPE_DESC   = { equity:'Buy & hold',       intraday:'Same-day', futures:'Futures',     options:'Per lot'  };
-
-var pricingFilter = 'equity';
-var activePlanId  = null;
-
-function getPlanRate(tier) {
-  return { equity:tier.displayEq, intraday:tier.displayIn, futures:tier.displayFu, options:tier.displayOp }[pricingFilter];
-}
-
-function renderPlanCards() {
-  document.getElementById('planCards').innerHTML = TIERS.map(function(t) {
-    return '<div class="plan-card ' + (activePlanId === t.id ? 'active' : '') + '" onclick="selectPlan(\'' + t.id + '\')">'
-      + '<div class="pc-badge">' + t.name + '</div>'
-      + '<div class="pc-deposit">' + t.depositShort + '</div>'
-      + '<div class="pc-rate">' + getPlanRate(t) + '</div>'
-      + '<div class="pc-type">' + (pricingFilter === 'options' ? 'per lot' : 'brokerage') + '</div>'
-      + (t.save ? '<div class="pc-divider"></div><span class="pc-save">' + t.save + ' vs Starter</span>' : '<div style="height:10px"></div>')
-      + '</div>';
-  }).join('');
-}
-
-function renderPlanDetail(id) {
-  var t = TIERS.find(function(x) { return x.id === id; });
-  var keys = ['equity','intraday','futures','options'];
-  var rates = { equity:t.displayEq, intraday:t.displayIn, futures:t.displayFu, options:t.displayOp };
-  document.getElementById('planDetail').innerHTML =
-    '<div class="plan-detail anim">'
-    + '<div class="pd-head"><span class="pd-title">' + t.name + ' — all rates</span><span class="pd-dep">' + t.deposit + '</span></div>'
-    + '<div class="pd-grid">'
-    + keys.map(function(k) {
-        return '<div class="pd-cell">'
-          + '<div class="pd-label">' + TYPE_LABELS[k] + '</div>'
-          + '<div class="pd-val ' + (k === pricingFilter ? '' : 'dim') + '">' + rates[k] + '</div>'
-          + '<div class="pd-desc">' + TYPE_DESC[k] + '</div>'
-          + '</div>';
-      }).join('')
-    + '</div>'
-    + (t.save ? '<div class="pd-foot"><span class="pf-l">Compared to Starter</span><span class="pf-r">↓ ' + t.save + ' cheaper</span></div>' : '')
-    + '</div>';
-}
-
-function selectPlan(id) {
-  activePlanId = activePlanId === id ? null : id;
-  renderPlanCards();
-  if (activePlanId) {
-    renderPlanDetail(activePlanId);
-  } else {
-    document.getElementById('planDetail').innerHTML = '';
+/* ── UPGRADE SAVINGS SECTION ── */
+function renderUpgradeSection(result) {
+  const container = document.getElementById('upgradeContent');
+  if (!result) {
+    container.innerHTML = `
+      <div class="upgrade-placeholder">
+        <i class="ti ti-receipt-2"></i>
+        Enter your trade details above to see per-tier savings on this specific trade.
+      </div>`;
+    return;
   }
-}
 
-function setPricingFilter(btn, key) {
-  document.querySelectorAll('#filterSeg button').forEach(function(b) { b.classList.remove('active'); });
-  btn.classList.add('active');
-  pricingFilter = key;
-  renderPlanCards();
-  if (activePlanId) renderPlanDetail(activePlanId);
+  const { tradeType, buyTurnover, sellTurnover, lots, tier: currentTier, totalCharges } = result;
+  const rateMap = { equity: currentTier.displayEq, intraday: currentTier.displayIn, futures: currentTier.displayFu, options: currentTier.displayOp };
+
+  let html = `
+    <div class="current-plan-row">
+      <div class="cp-left">
+        <div class="cp-dot" style="background:${currentTier.color}"></div>
+        <div>
+          <div class="cp-title">${currentTier.name} plan — your current tier</div>
+          <div class="cp-dep">${currentTier.deposit}</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px">
+        <div class="cp-rate-item">
+          <div class="cp-rate-type">Total charges</div>
+          <div class="cp-rate-val">${fmtINR(totalCharges)}</div>
+        </div>
+        <span class="cp-current-badge">Active</span>
+      </div>
+    </div>
+    <div class="savings-grid">`;
+
+  TIERS.forEach(tier => {
+    const charges = computeCharges(tier, tradeType, buyTurnover, sellTurnover, lots);
+    const saving  = totalCharges - charges.totalCharges;
+    const isCurrent = tier.id === currentTier.id;
+    const isLocked  = tier.min > currentTier.min;
+
+    let saveHtml;
+    if (isCurrent) {
+      saveHtml = `<div class="sc-save-row"><span class="sc-save-pill neutral">Current plan</span><span class="sc-save-amt muted">—</span></div>`;
+    } else if (isLocked) {
+      saveHtml = `<div class="sc-save-row"><span class="sc-save-pill locked-pill">Need ${tier.depositShort}</span><span class="sc-save-amt muted">—</span></div>`;
+    } else {
+      const savingAbs = Math.abs(saving);
+      saveHtml = `<div class="sc-save-row"><span class="sc-save-pill">${saving > 0 ? '↓ save' : '↑ costs'} vs current</span><span class="sc-save-amt green">${fmtINR(savingAbs)}</span></div>`;
+    }
+
+    html += `
+      <div class="savings-card ${isCurrent ? 'is-current' : ''} ${isLocked ? 'locked' : ''}">
+        <div class="sc-tier"><div class="sc-dot" style="background:${tier.color}"></div><div class="sc-name">${tier.name}</div></div>
+        <div class="sc-dep">${tier.deposit}</div>
+        <div class="sc-charge-row"><span class="sc-charge-lbl">Brokerage</span><span class="sc-charge-val ${isCurrent ? 'accent' : ''}">${fmtINR(charges.brokerage)}</span></div>
+        <div class="sc-charge-row"><span class="sc-charge-lbl">Total charges</span><span class="sc-charge-val ${isCurrent ? 'accent' : ''}">${fmtINR(charges.totalCharges)}</span></div>
+        <div class="sc-divider"></div>
+        ${saveHtml}
+      </div>`;
+  });
+
+  html += '</div>';
+  container.innerHTML = html;
 }
 
 /* ── INIT ── */
-renderPlanCards();
+calculate();
 </script>
 </body>
 </html>
